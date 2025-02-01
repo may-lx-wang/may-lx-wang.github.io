@@ -1,0 +1,134 @@
+{
+  "template": {
+    "id": "",
+    "name": "",
+    "blurb": "",
+    "date": "",
+    "description": ""
+  },
+
+  "bigProjects": [
+    {
+      "id": "voder-synth",
+      "name": "/ˈvəʊdə/",
+      "blurb": "IPA-based formant synthesis groovebox",
+      "date": "December 2024",
+      "description": ""
+    },
+    {
+      "id": "transmit-buoy",
+      "name": "Hydroaccoustic Transmit Buoy",
+      "blurb": "Electromagnetic <-> Hydroaccoustic converter",
+      "date": "May 2024",
+      "description": ""
+    },
+    {
+      "id": "tissue-dehydrator",
+      "name": "Biological Tissue Processor",
+      "blurb": "Low-cost automated ethanol dehydrator",
+      "date": "April 2024",
+      "description": ""
+    },
+    {
+      "id": "robot-worm",
+      "name": "Robotic Tunneling Worm",
+      "blurb": "Soft robotic agricultural soil monitor",
+      "date": "March 2024",
+      "description": ""
+    }
+  ],
+
+  "smallProjects": [
+    {
+      "id": "split-dye",
+      "name": "Vector Field Hair Dye Render",
+      "blurb": "I will show my hairdresser MATLAB graphs",
+      "date": "January 2025",
+      "description": ""
+    },
+    {
+      "id": "garage-keypad",
+      "name": "Garage Door Keypad",
+      "blurb": "Now my garage has ergobleds",
+      "date": "January 2025",
+      "description": ""
+    },
+    {
+      "id": "nunu-costume",
+      "name": "Nunu Costume",
+      "blurb": "WE ROLLING!!",
+      "date": "October 2024",
+      "description": ""
+    },
+    {
+      "id": "cuauv-racks",
+      "name": "Submarine PCB Mounting Racks",
+      "blurb": "So when the sub crashes it only mechanically breaks",
+      "date": "September 2024",
+      "description": ""
+    },
+    {
+      "id": "food-processor",
+      "name": "Modular Food Processor",
+      "blurb": "For foods with weird bends",
+      "date": "May 2024",
+      "description": ""
+    },
+    {
+      "id": "touch-stand",
+      "name": "Manually Machined Touch Stand",
+      "blurb": "Power feed my beloved",
+      "date": "April 2024",
+      "description": "Thanks Brandon for making me an actually competent machinist"
+    },
+    {
+      "id": "g2-render",
+      "name": "G2 Pilot Pen Render",
+      "blurb": "*click* *click* *click*",
+      "date": "March 2024",
+      "description": ""
+    },
+    {
+      "id": "dog-tag",
+      "name": "CNC Dog Tag",
+      "blurb": "...and a laser-cut case!",
+      "date": "Febuary 2024",
+      "description": ""
+    },
+    {
+      "id": "milk-jug",
+      "name": "Takeout Box Milk Jug",
+      "blurb": "To steal milk from the cafeteria",
+      "date": "October 2023",
+      "description": ""
+    },
+    {
+      "id": "sykle-synth",
+      "name": "Sykle",
+      "blurb": "Displaying data with a servo?",
+      "date": "July 2023",
+      "description": ""
+    },
+    {
+      "id": "plant-nursery",
+      "name": "Micro Plant Nursery",
+      "blurb": "I'm way too forgetful for plants",
+      "date": "Febuary 2023",
+      "description": ""
+    },
+    {
+      "id": "led-sweater",
+      "name": "RGB Vertebrae Sweater",
+      "blurb": "Reacts to music too!",
+      "date": "October 2022",
+      "description": ""
+    },
+    {
+      "id": "custom-hitbox",
+      "name": "Custom Hitbox",
+      "blurb": "Who needs an AMS",
+      "date": "March 2022",
+      "description": ""
+    }
+  ]
+}
