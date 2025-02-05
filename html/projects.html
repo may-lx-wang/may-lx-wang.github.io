@@ -3,10 +3,11 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title>Template</title>
+    <title>Projects</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Ubuntu:wght@400&display=swap"
+        rel="stylesheet" />
     <link rel="stylesheet" href="../css/styles.css" />
 </head>
 
@@ -14,29 +15,25 @@
     <div class="container" id="container"></div>
     <script src="../js/utils.js"></script>
     <script src="../js/template.js"></script>
+    <script src="../js/projects.js"></script>
     <script>
-
-        function render() {
+        async function render() {
             const container = document.getElementById("container");
-            container.querySelectorAll(".line, .number-label, .nav-label").forEach((el) => el.remove());
+            container.innerHTML = "";
 
-            const showScrollbar = false;
+            // Calculate dimensions asynchronously
+            const {totalHeight, totalWidth} = await calculateDimensions();
 
-            height = window.innerHeight;
-            width = window.innerWidth;
+            // Generate template elements with updated height and width
+            const templateElementsArray = templateElements(totalHeight, totalWidth, "projects");
 
-            if (showScrollbar) {
-                document.body.style.overflowY = 'show';
-                document.body.style.minHeight = `1000px`;
-                height = 1000;
-                width -= getScrollbarWidth();
-            }
+            // Get the project elements asynchronously
+            const projectElementsArray = await projectsElements(totalHeight, totalWidth);
 
+            // Append all elements to the container
             const fragment = document.createDocumentFragment();
-            const elements = [
-                ...templateElements(height, width, 'projects')
-            ];
-            elements.forEach((el) => fragment.appendChild(el));
+            templateElementsArray.forEach((el) => fragment.appendChild(el));
+            projectElementsArray.forEach((el) => fragment.appendChild(el));
             container.appendChild(fragment);
         }
 

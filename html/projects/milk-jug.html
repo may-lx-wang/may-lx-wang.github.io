@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Takeout Box Milk Jug</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/styles.css" />
+</head>
+<body>
+  <div class="container" id="container"></div>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="../../js/utils.js"></script>
+  <script src="../../js/template.js"></script>
+  <script src="../../js/single.js"></script>
+  <script>
+    window.projectData = {
+      id: "milk-jug",
+      name: "Takeout Box Milk Jug",
+      blurb: "To steal milk from the cafeteria",
+      date: "October 2023",
+      assets: JSON.parse('{"main": "milk-jug.png", "additional": ["milk-jug-1.png"], "attachments": []}')
+    };
+
+    function render() {
+      const container = document.getElementById("container");
+      container.innerHTML = '';
+      
+      const height = window.innerHeight;
+      const width = window.innerWidth;
+
+      const fragment = document.createDocumentFragment();
+      const elements = [
+        ...templateElements(height, width, 'projects'),
+        ...singleElements(height, width)
+      ];
+      elements.forEach((el) => fragment.appendChild(el));
+      container.appendChild(fragment);
+    }
+
+    render();
+    window.addEventListener("resize", render);
+  </script>
+</body>
+</html>

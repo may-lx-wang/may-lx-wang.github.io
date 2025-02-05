@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Submarine PCB Mounting Racks</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/styles.css" />
+</head>
+<body>
+  <div class="container" id="container"></div>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="../../js/utils.js"></script>
+  <script src="../../js/template.js"></script>
+  <script src="../../js/single.js"></script>
+  <script>
+    window.projectData = {
+      id: "cuauv-racks",
+      name: "Submarine PCB Mounting Racks",
+      blurb: "So when the sub crashes it only mechanically breaks",
+      date: "September 2024",
+      assets: JSON.parse('{"main": "cuauv-racks.png", "additional": ["cuauv-racks-1.png"], "attachments": ["cuauv-racks.pdf"]}')
+    };
+
+    function render() {
+      const container = document.getElementById("container");
+      container.innerHTML = '';
+      
+      const height = window.innerHeight;
+      const width = window.innerWidth;
+
+      const fragment = document.createDocumentFragment();
+      const elements = [
+        ...templateElements(height, width, 'projects'),
+        ...singleElements(height, width)
+      ];
+      elements.forEach((el) => fragment.appendChild(el));
+      container.appendChild(fragment);
+    }
+
+    render();
+    window.addEventListener("resize", render);
+  </script>
+</body>
+</html>

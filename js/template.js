@@ -68,10 +68,10 @@ function createMainBorders(height, width) {
 
 function createTopNavigation(innerWidth, pageType = 'home') {
   const navItems = [
-    { text: "home", href: "home.html" },
-    { text: "projects", href: "projects.html" },
-    { text: "about me", href: "about-me.html" },
-    { text: "web apps", href: "web-apps.html" }
+    { text: "home", href: "/html/home.html" },
+    { text: "projects", href: "/html/projects.html" },
+    { text: "about me", href: "/html/about-me.html" },
+    { text: "resume", href: "/assets/resume/may-wang-resume.pdf" }
   ];
   const topSpacing = innerWidth / 4;
   const elements = [];
