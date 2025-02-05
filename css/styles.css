@@ -64,20 +64,20 @@ p a {
 }
 
 .markdown-content {
-  line-height: 1; /* Adjust this value to control spacing */
+  line-height: 1.5rem; /* Adjust this value to control spacing */
 }
 
 .markdown-content p {
-  margin-bottom: 3rem; /* Space between paragraphs */
+  margin-bottom: 1rem; /* Space between paragraphs */
 }
 
 .markdown-content ul,
 .markdown-content ol {
-    margin-top: -5rem;
+    margin-top: -3.5rem;
     margin-bottom: -2rem;
     padding-left: 2rem; /* Indent lists */
 }
 
 .markdown-content li {
-  margin-bottom: -0.5rem; /* Space between list items */
+  margin-bottom: -1rem; /* Space between list items */
 }

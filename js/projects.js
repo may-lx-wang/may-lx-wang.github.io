@@ -115,6 +115,19 @@ function createProjectCard(project) {
           padding: 10px;
       `;
 
+  const link = document.createElement("a");
+  link.href = `./projects/${project.id}.html`;
+  link.style.cssText = `
+        text-decoration: none;
+        color: inherit;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+      `;
+
   // Project Image
   const img = document.createElement("img");
   img.src = getImageSource(project); // Use the project object
@@ -124,7 +137,7 @@ function createProjectCard(project) {
           object-fit: contain;
           border-radius: 5px;
       `;
-  card.appendChild(img);
+  link.appendChild(img);
 
   // Project Name
   const name = document.createElement("h2");
@@ -134,7 +147,7 @@ function createProjectCard(project) {
           font-weight: bold;
           margin: 10px 0 5px;
       `;
-  card.appendChild(name);
+  link.appendChild(name);
 
   // Project Date
   const date = document.createElement("p");
@@ -144,7 +157,7 @@ function createProjectCard(project) {
           font-style: italic;
           margin: 0;
       `;
-  card.appendChild(date);
+  link.appendChild(date);
 
   // Project Blurb
   const blurb = document.createElement("p");
@@ -153,8 +166,8 @@ function createProjectCard(project) {
           font-size: 14px;
           margin: 5px 0;
       `;
-  card.appendChild(blurb);
-
+  link.appendChild(blurb);
+  card.appendChild(link);
   return card;
 }
 

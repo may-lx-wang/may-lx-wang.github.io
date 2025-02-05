@@ -2,7 +2,7 @@ import json
 from pathlib import Path
 
 # Load the projects data
-with open(r"C:\Users\May\Desktop\Website\json\projects.json", "r", encoding="utf-8") as f:
+with open(r"C:\Users\May\Desktop\Projects\maylxwang.com\json\projects.json", "r", encoding="utf-8") as f:
     projects = json.load(f)
 
 # Template for project pages
@@ -28,39 +28,61 @@ project_template = '''<!DOCTYPE html>
       name: "{name}",
       blurb: "{blurb}",
       date: "{date}",
-      assets: JSON.parse('{assets}')
+      assets: {assets}
     }};
 
-    function render() {{
-      const container = document.getElementById("container");
-      container.innerHTML = '';
       
-      const height = window.innerHeight;
-      const width = window.innerWidth;
+async function render() {{
+  const container = document.getElementById("container");
+  container.innerHTML = '';
 
-      const fragment = document.createDocumentFragment();
-      const elements = [
-        ...templateElements(height, width, 'projects'),
-        ...singleElements(height, width)
-      ];
-      elements.forEach((el) => fragment.appendChild(el));
-      container.appendChild(fragment);
-    }}
+  const {{ elements, height: contentHeight }} = await singleElements(window.innerHeight, window.innerWidth);
 
-    render();
-    window.addEventListener("resize", render);
+  // Check if content overflows
+  if (contentHeight > window.innerHeight) {{
+    // Subtract scrollbar width if necessary
+    const totalWidth = window.innerWidth - getScrollbarWidth();
+
+    // Set container height to fit content
+    container.style.height = `${{contentHeight}}px`;
+
+    // Re-render template with the new height
+    const templateEls = templateElements(contentHeight, totalWidth, 'projects');
+
+    // Combine all elements
+    const fragment = document.createDocumentFragment();
+    const allElements = [...templateEls, ...elements];
+    allElements.forEach((el) => fragment.appendChild(el));
+    container.appendChild(fragment);
+  }} else {{
+    // Use default height
+    const templateEls = templateElements(window.innerHeight, window.innerWidth, 'projects');
+
+    // Combine all elements
+    const fragment = document.createDocumentFragment();
+    const allElements = [...templateEls, ...elements];
+    allElements.forEach((el) => fragment.appendChild(el));
+    container.appendChild(fragment);
+  }}
+}}
+
+render().then(() => {{
+  window.addEventListener("resize", render);
+}});
   </script>
 </body>
 </html>'''
 
 # Directory to store the generated HTML files
-output_dir = Path(r"C:\Users\May\Desktop\Website\html\projects")
+output_dir = Path(r"C:\Users\May\Desktop\Projects\maylxwang.com\html\projects")
 output_dir.mkdir(exist_ok=True)
 
-# Generate HTML files for each project
+
 for project in projects['bigProjects'] + projects['smallProjects']:
-    # Use the old path format: "{id}.html"
     html_file_path = output_dir / (project["id"] + ".html")
+    
+    # Remove JSON.parse since we're passing the JSON directly
+    assets_json = json.dumps(project.get("assets", {}))
     
     with open(html_file_path, "w", encoding="utf-8") as f:
         f.write(project_template.format(
@@ -68,5 +90,5 @@ for project in projects['bigProjects'] + projects['smallProjects']:
             name=project['name'],
             blurb=project['blurb'],
             date=project['date'],
-            assets=json.dumps(project.get("assets", {}))
+            assets=assets_json  # Pass the JSON string directly
         ))

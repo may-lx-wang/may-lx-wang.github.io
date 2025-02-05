@@ -20,27 +20,47 @@
       name: "Robotic Tunneling Worm",
       blurb: "Soft robotic agricultural soil monitor",
       date: "March 2024",
-      assets: JSON.parse('{"main": "robot-worm.gif", "additional": ["robot-worm-1.gif", "robot-worm-2.png"], "attachments": []}')
+      assets: {"main": "robot-worm.gif", "additional": ["robot-worm-1.gif", "robot-worm-2.png"], "attachments": []}
     };
 
-    function render() {
-      const container = document.getElementById("container");
-      container.innerHTML = '';
       
-      const height = window.innerHeight;
-      const width = window.innerWidth;
+async function render() {
+  const container = document.getElementById("container");
+  container.innerHTML = '';
 
-      const fragment = document.createDocumentFragment();
-      const elements = [
-        ...templateElements(height, width, 'projects'),
-        ...singleElements(height, width)
-      ];
-      elements.forEach((el) => fragment.appendChild(el));
-      container.appendChild(fragment);
-    }
+  const { elements, height: contentHeight } = await singleElements(window.innerHeight, window.innerWidth);
 
-    render();
-    window.addEventListener("resize", render);
+  // Check if content overflows
+  if (contentHeight > window.innerHeight) {
+    // Subtract scrollbar width if necessary
+    const totalWidth = window.innerWidth - getScrollbarWidth();
+
+    // Set container height to fit content
+    container.style.height = `${contentHeight}px`;
+
+    // Re-render template with the new height
+    const templateEls = templateElements(contentHeight, totalWidth, 'projects');
+
+    // Combine all elements
+    const fragment = document.createDocumentFragment();
+    const allElements = [...templateEls, ...elements];
+    allElements.forEach((el) => fragment.appendChild(el));
+    container.appendChild(fragment);
+  } else {
+    // Use default height
+    const templateEls = templateElements(window.innerHeight, window.innerWidth, 'projects');
+
+    // Combine all elements
+    const fragment = document.createDocumentFragment();
+    const allElements = [...templateEls, ...elements];
+    allElements.forEach((el) => fragment.appendChild(el));
+    container.appendChild(fragment);
+  }
+}
+
+render().then(() => {
+  window.addEventListener("resize", render);
+});
   </script>
 </body>
 </html>
