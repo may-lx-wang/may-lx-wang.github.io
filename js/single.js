@@ -2,57 +2,65 @@ const singleDims = {
   buffer: 20,
 };
 
-function getAssetsBottom(assets) {
-  const baseTop = dims.innerBorder + 120;
-
-  if (!assets || (!assets.main && (!assets.additional || assets.additional.length === 0))) {
-    return baseTop;
-  }
-
-  const assetsCount = (assets.main ? 1 : 0) + (assets.additional ? assets.additional.length : 0);
-  const maxHeight = 300; // Max height of each asset
-  const gap = 20; // Gap between assets
-
-  const containerWidth = window.innerWidth - (2 * dims.innerBorder);
-  const assetsPerRow = Math.floor(containerWidth / (maxHeight + gap));
-  const rows = Math.ceil(assetsCount / assetsPerRow);
-
-  const totalHeight = (maxHeight * rows) + (gap * (rows - 1));
-  return baseTop + totalHeight + singleDims.buffer;
-}
-
 function singleElements(height, width) {
   const project = window.projectData;
-  const assetsBottom = getAssetsBottom(project.assets);
-
+  let assetsHeight;
   return new Promise((resolve) => {
     const elements = [
       createProjectTitle(project.name, project.date),
-      createProjectAssets(project.assets, width, height),
+      createProjectAssets(project.assets),
     ];
 
-    const description = createProjectDescription(project.id);
-    elements.push(description);
+    const assetsElement = elements[1];
 
-    // Wait for markdown to load
-    fetch(`../../assets/projects/${project.id}/${project.id}.md`)
-      .then((response) => response.text())
-      .then((markdown) => {
-        description.innerHTML = marked.parse(markdown);
+    // Append assetsElement to DOM to measure its height
+    document.body.appendChild(assetsElement);
 
-        // Calculate total height
-        const markdownHeight = description.getBoundingClientRect().height;
-        const totalHeight = assetsBottom + markdownHeight + singleDims.buffer;
-        console.log(assetsBottom);
-        console.log(markdownHeight);
-        console.log(singleDims.buffer);
-        resolve({ elements, height: totalHeight });
-      })
-      .catch((error) => {
-        console.error("Failed to load markdown file:", error);
-        description.textContent = "Markdown content not available.";
-        resolve({ elements, height: assetsBottom + 200 }); // Fallback height
+    const images = Array.from(assetsElement.getElementsByTagName('img'));
+    const imagePromises = images.map(img => {
+      return new Promise((resolve) => {
+        if (img.complete) {
+          resolve();
+        } else {
+          img.onload = () => resolve();
+          img.onerror = () => resolve();
+        }
       });
+    });
+
+    Promise.all(imagePromises).then(() => {
+      assetsHeight = assetsElement.getBoundingClientRect().height;
+      console.log("Assets container height:", assetsHeight);
+
+      // Remove assetsElement from DOM after measuring
+      document.body.removeChild(assetsElement);
+
+      const description = createProjectDescription(project.id, assetsHeight + 150);
+      elements.push(description);
+
+      // Wait for markdown to load
+      fetch(`../../assets/projects/${project.id}/${project.id}.md`)
+        .then((response) => response.text())
+        .then((markdown) => {
+          description.innerHTML = marked.parse(markdown);
+
+          // Temporarily append description to DOM to measure its height
+          document.body.appendChild(description);
+
+          // Calculate markdownHeight after the element is rendered
+          const markdownHeight = description.getBoundingClientRect().height;
+
+          // Remove description from DOM after measuring
+          document.body.removeChild(description);
+
+          // Calculate total height
+          const totalHeight = 150 + assetsHeight + markdownHeight + singleDims.buffer + dims.innerBorder;
+          console.log("assetsHeight " + assetsHeight);
+          console.log("markdownHeight " + markdownHeight);
+          console.log("singleDims.buffer " + singleDims.buffer);
+          resolve({ elements, height: totalHeight });
+        });
+    });
   });
 }
 
@@ -116,7 +124,32 @@ function createProjectAssets(assets) {
     });
   }
 
+  // Add YouTube video if present
+  if (assets.youtube) {
+    const youtubeVideo = createYoutubeEmbed(assets.youtube);
+    container.appendChild(youtubeVideo);
+  }
+
   return container;
+}
+
+function createYoutubeEmbed(youtubeUrl) {
+  const videoContainer = document.createElement("div");
+  videoContainer.style.cssText = `
+        max-width: 560px;
+        width: 100%;
+    `;
+
+  const iframe = document.createElement("iframe");
+  iframe.src = youtubeUrl.replace("watch?v=", "embed/");
+  iframe.width = "100%";
+  iframe.height = "315";
+  iframe.frameBorder = "0";
+  iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+  iframe.allowFullscreen = true;
+
+  videoContainer.appendChild(iframe);
+  return videoContainer;
 }
 
 function createAssetElement(assetName) {
@@ -130,9 +163,8 @@ function createAssetElement(assetName) {
   return assetElement;
 }
 
-function createProjectDescription(projectId) {
+function createProjectDescription(projectId, assetsBottom) {
   const container = document.createElement("div");
-  const assetsBottom = getAssetsBottom(window.projectData.assets);
 
   container.style.cssText = `
       position: absolute;
@@ -148,15 +180,15 @@ function createProjectDescription(projectId) {
   container.classList.add("markdown-content");
 
   fetch(`../../assets/projects/${projectId}/${projectId}.md`)
-      .then((response) => response.text())
-      .then((markdown) => {
-          const html = marked.parse(markdown);
-          container.innerHTML = html;
-      })
-      .catch((error) => {
-          console.error("Failed to load markdown file:", error);
-          container.textContent = "Markdown content not available.";
-      });
+    .then((response) => response.text())
+    .then((markdown) => {
+      const html = marked.parse(markdown);
+      container.innerHTML = html;
+    })
+    .catch((error) => {
+      console.error("Failed to load markdown file:", error);
+      container.textContent = "Markdown content not available.";
+    });
 
   return container;
 }

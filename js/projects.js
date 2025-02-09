@@ -45,7 +45,7 @@ async function calculateDimensions() {
   const smallProjectsHeight =
     Math.ceil(data.smallProjects.length / maxCardsPerRow) * (cardHeight + gap) + padding * 2;
 
-  const totalHeight = bigProjectsHeight + smallProjectsHeight + dims.upperGap + 2 * dims.innerBorder + 60;
+  const totalHeight = bigProjectsHeight + smallProjectsHeight + dims.upperGap + 2 * dims.innerBorder + 120;
   // Total width is the full window width
   const totalWidth = window.innerWidth - getScrollbarWidth();
 
