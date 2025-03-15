@@ -148,7 +148,7 @@ function createAboutMeText(innerWidth, innerHeight) {
         "Hi! I'm May, a third-year undergrad studying Mechanical Engineering at Cornell University. On campus I'm a MechE subteam member of ",
         { text: "CU Autonomous Underwater Vehicle", link: "https://cuauv.org" },
         ", Training Chair in ",
-        { text: "Cornell Maker Club", link: "https://cuauv.org" },
+        { text: "Cornell Maker Club", link: "https://makerclub.ece.cornell.edu/" },
         ", and researcher at ",
         { text: "Shepherd's Organic Robotics Lab", link: "https://orl.mae.cornell.edu/index.html" },
         ".",
