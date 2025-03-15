@@ -154,7 +154,7 @@ function createAboutMeText(innerWidth, innerHeight) {
         ".",
       ],
     },
-    "At this point I'm planning to pursue grad school in Mechatronics, exploring the amalgamation of kinesthetic haptics, unconventional interfaces, admittance control, and soft robotics.",
+    "At this point I'm planning to pursue grad school in Mechatronics, exploring the amalgamation of kinesthetic haptics, unconventional interfaces, musical synthesizers, and soft robotics.",
     {
       text: [
         "If you think my skillset is fitting, I'm also always looking for commission engineering work! I wont charge much if the challenge is interesting and fun. ",
