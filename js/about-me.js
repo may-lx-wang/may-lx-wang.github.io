@@ -309,7 +309,7 @@ function createAboutMeImage(innerWidth, innerHeight) {
     `;
   
     const img = document.createElement("img");
-    img.src = "../assets/about-me/about-me.jpg";
+    img.src = "../assets/about-me/about-me.png";
     img.style.cssText = `
       width: 100%;
       height: auto;
